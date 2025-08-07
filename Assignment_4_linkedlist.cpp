@@ -69,6 +69,7 @@ class Playlist{
     void deleteNode( int position) {
 
     if (head == NULL) {
+      cout<<"LL is empty";
         return;
     }
     if (position == 1) {
@@ -91,6 +92,26 @@ class Playlist{
     prev->next = current->next;
     delete current;
   }
+  void nav(int pos){
+     if (head == NULL) {
+      cout<<"LL is empty\n";
+        return;
+    }
+    Node* T = head;
+    Node* P=NULL;
+    int count=1;
+    while (T != NULL&& count < pos) {
+        P=T;
+        T=T->next;
+        count++;
+    }
+    cout<<"Current Song: "<<T->Song_name<<endl;
+    cout<<"Previous Song: "<<P->Song_name<<endl;
+    Node *N;
+    N=T->next;
+    cout<<"Next Song: "<<N->Song_name<<endl;
+ 
+  }
 
 };
 
@@ -104,7 +125,7 @@ int main(){
   P.display();
   int dec=0;
   while(dec!=5){
-    cout<<"Enter Choice \n 1.Display \n 2. Insert at end \n 3. Insert at Beginning \n 4.Insert after song name \n 5. Delete Song \n 6. Exit\n";
+    cout<<"Enter Choice \n 1.Display \n 2. Insert at end \n 3. Insert at Beginning \n 4.Insert after song name \n 5. Delete Song \n 6. Know Previous and Next Song\n 7. Exit \n";
     int choice;
     cin>>choice;
     string s,e;
@@ -137,6 +158,12 @@ int main(){
       P.deleteNode(pos); 
       break;
     case 6:
+      cout<<"Enter Position Of the song to delete\n";
+      cin>>pos;
+      P.nav(pos); 
+      break;
+       
+    case 7:
       dec=5;
       break;
     }
