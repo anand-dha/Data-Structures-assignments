@@ -66,6 +66,32 @@ class Playlist{
       }
      cout<<"-------------------\n";
     }
+    void deleteNode( int position) {
+
+    if (head == NULL) {
+        return;
+    }
+    if (position == 1) {
+        Node* temp = head;
+        head = head->next;
+        delete temp;
+        return;
+    }
+
+
+    Node* current = head;
+    Node* prev = NULL;
+    int count = 1;
+
+    while (current != NULL&& count < position) {
+        prev = current;
+        current = current->next;
+        count++;
+    }
+    prev->next = current->next;
+    delete current;
+  }
+
 };
 
 int main(){
@@ -74,8 +100,46 @@ int main(){
   P.insert_end("qafirana");
   P.insert_end("despacito");
   P.insert_beg("gurenge");
-  P.display();
   P.insert_after("perfect","jhol");
   P.display();
+  int dec=0;
+  while(dec!=5){
+    cout<<"Enter Choice \n 1.Display \n 2. Insert at end \n 3. Insert at Beginning \n 4.Insert after song name \n 5. Delete Song \n 6. Exit\n";
+    int choice;
+    cin>>choice;
+    string s,e;
+    int pos;
+    switch (choice)
+    {
+    case 1:
+      P.display();
+      break;
+    case 2:
+      cout<<"Enter Song Name\n";
+      cin>>s;
+      P.insert_end(s);
+      break;
+    case 3:
+      cout<<"Enter Song Name \n";
+      cin>>s;
+      P.insert_beg(s);
+      break;
+    case 4:
+      cout<<"Enter Song Name To insert\n";
+      cin>>s;
+      cout<<"Enter Song name To insert after \n ";
+      cin>>e;
+      P.insert_after(e,s);
+      break;
+    case 5: 
+      cout<<"Enter Position Of the song to delete\n";
+      cin>>pos;
+      P.deleteNode(pos); 
+      break;
+    case 6:
+      dec=5;
+      break;
+    }
+  }
   return 0;
 }
