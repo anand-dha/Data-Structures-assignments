@@ -1,0 +1,91 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Node {
+    public:
+    string folder;
+    Node* prev;
+    Node* next;
+    Node(string f) {
+        folder = f;
+        prev = next = NULL;
+    }
+};
+
+class FileNavigator {
+public:
+    Node* current; 
+    FileNavigator(string root) {
+        current = new Node(root); 
+    }
+
+    void navigate(string folder) {
+        Node* newNode = new Node(folder);
+        if (current->next!=NULL) {
+            Node* temp = current->next;
+            while (temp!=NULL) {
+                Node* del = temp;
+                temp = temp->next;
+                delete del;
+            }
+            current->next = nullptr;
+        }
+
+        current->next = newNode;
+        newNode->prev = current;
+        current = newNode;
+    }
+
+    void back() {
+        if (current->prev!=NULL) {
+            current = current->prev;
+        } else {
+            cout << "No previous folder!\n";
+        }
+    }
+
+    void forward() {
+        if (current->next!=NULL) {
+            current = current->next;
+        } else {
+            cout << "No forward folder!\n";
+        }
+    }
+
+    void showPath() {
+        Node* temp = current;
+        string path = "";
+
+        while (temp->prev!=NULL) {
+            temp = temp->prev;
+        }
+
+        while (temp) {
+            path += "/" + temp->folder;
+            temp = temp->next;
+        }
+
+        cout << "Current Path: " << path << endl;
+    }
+};
+
+int main() {
+    FileNavigator nav("Root");
+
+    nav.navigate("Folder1");
+    nav.navigate("Folder2");
+    nav.navigate("Folder3");
+    nav.showPath(); 
+
+    nav.back();
+    nav.showPath(); 
+
+    nav.forward();
+    nav.showPath(); 
+
+    nav.back();
+    nav.navigate("NewFolder");
+    nav.showPath(); 
+    return 0;
+}
