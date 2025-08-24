@@ -1,0 +1,140 @@
+
+#include<iostream>
+using namespace std;
+class node{
+    public:
+    int coff;
+    int power;
+    node*next;
+    node(){
+    coff=0;
+    power=0;
+    next=NULL;
+
+    }
+    node(int a,int b){
+    coff=a;
+    power=b;
+    next=NULL;
+    }
+};
+class ll{
+    public:
+    node*head;
+    node*h1;
+    node*h2;
+    ll(){
+    head=NULL;
+    h1=NULL;
+    h2=NULL;
+    }
+    void add(int a,int b){
+    node*nn=new node(a,b);
+    if(head==NULL){
+    head=nn;
+    }
+    else{
+    node*t=head;
+    while(t->next!=NULL){
+    t=t->next;
+    }
+    t->next=nn;
+    }
+}
+    void display(){
+    node*t=head;
+    if(head==NULL){
+    cout<<"no element is present"<<endl;
+    }
+    else{
+    while(t->next!=NULL){
+    cout<<t->coff<<"x^"<<t->power;
+    cout<<"+";
+    t=t->next;
+    }
+    cout<<t->coff<<"x^"<<t->power<<endl;
+    }
+}
+    void addpoly(ll &l1, ll &l2){
+    node* t1 = l1.head;
+    node* t2 = l2.head;
+    
+    head = NULL;
+    node* tail = NULL;
+    
+    while(t1 != NULL && t2 != NULL){
+    int coff = 0;
+    int power = 0;
+    
+    if(t1->power > t2->power){
+    coff = t1->coff;
+    power = t1->power;
+    t1 = t1->next;
+    }
+    else if(t1->power < t2->power){
+    coff = t2->coff;
+    power = t2->power;
+    t2 = t2->next;
+    }
+    else{
+    coff = t1->coff + t2->coff;
+    power = t1->power;
+    t1 = t1->next;
+    t2 = t2->next;
+    }
+    
+    node* nn = new node(coff, power);
+    if(head == NULL){
+    head = nn;
+    tail = nn;
+    }
+    else{
+    tail->next = nn;
+    tail = nn;
+    }
+}   
+
+    while(t1 != NULL){
+    node* nn = new node(t1->coff, t1->power);
+    if(head == NULL){
+    head = nn;
+    tail = nn;
+    }
+    else{
+    tail->next = nn;
+    tail = nn;
+    }
+    t1 = t1->next;
+    }
+    
+    while(t2 != NULL){
+    node* nn = new node(t2->coff, t2->power);
+    if(head == NULL){
+    head = nn;
+    tail = nn;
+    }
+    else{
+    tail->next = nn;
+    tail = nn;
+    }
+    t2 = t2->next;
+    }
+}
+    
+};
+int main(){
+ll l;
+ll l1,l2;
+l1.add(11,2);
+l1.add(2,1);
+l1.display();
+
+l2.add(4,2);
+l2.add(6,1);
+l2.display();
+
+l.addpoly(l1,l2);
+cout<<"Polynomial sum is :"<<endl;
+l.display();
+return 0;
+}
