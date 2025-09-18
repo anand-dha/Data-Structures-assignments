@@ -1,0 +1,79 @@
+#include<iostream>
+#include<string>
+using namespace std;
+class Stacks{
+    public:
+    string s[10];
+    int top;
+    Stacks(){top=-1;}
+    void push(string &inp){
+        top++;
+        s[top]=inp;
+    }
+    void pop(){
+        top--;
+    }
+};
+class library{
+    public:
+    Stacks l;
+    void addreturnedbook(string &s){
+       if(l.top==9){
+        cout<<"stack is full \n";
+        return;
+       }
+       l.push(s);
+    }
+    void givebook(){
+        l.pop();
+    }
+    
+    void displayStack(){
+        for(int i=l.top;i>=0;i--){
+            cout<<l.s[i]<<endl;
+        }
+    }
+};
+
+int main(){
+    library lot;
+    string k="harry vol1";
+    lot.addreturnedbook(k);
+    k="harry vol2";
+    lot.addreturnedbook(k);
+    k="harry vol3";
+    lot.addreturnedbook(k);
+    k="harry vol4";
+    lot.addreturnedbook(k);
+    int choice=3;
+    string bookname;
+    while(choice!=4){
+        cout<<"Select Choices \n 1.Add book to stack \n 2.Remove book From stack \n 3.Display Stack \n 4.Exit\n--------------\nEnter Your Choice:";
+        cin>>choice;
+        switch(choice){
+            case 1: 
+             cout<<"Enter Book name: ";
+             cin>>bookname;
+             lot.addreturnedbook(bookname);
+             lot.displayStack();
+             break;
+             case 2:
+             cout<<"Removing Top book \n";
+             lot.givebook();
+             lot.displayStack();
+             break;
+             case 3:
+             lot.displayStack();
+             break;
+             case 4:
+             cout<<"Exiting...\n";
+             choice=4;
+             break;
+        }
+    }
+        
+    
+    
+    lot.displayStack();
+    return 0;
+}
